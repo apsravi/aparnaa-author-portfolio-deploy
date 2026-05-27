@@ -1,51 +1,46 @@
 {
   "name": "Aparnaa Ravi",
-  "tagline": "Author \u2022 Storyteller \u2022 Devotional Fiction Writer",
-  "bio": "Aparnaa Ravi is a passionate devotional fiction writer whose work weaves mythology, spirituality, and modern storytelling into deeply engaging narratives. With a profound connection to ancient Indian mythology and contemporary spiritual themes, her books inspire readers to explore their own spiritual journeys through compelling characters and transformative stories.",
-  "shortBio": "Devotional fiction author crafting stories where ancient wisdom meets modern hearts.",
+  "tagline": "Author • Storyteller • Devotional Fiction Writer",
+  "bio": "Aparnaa Ravi (pen name: Appu S R) is a Chennai-based devotional fiction writer whose heart belongs to the timeless stories of the Ramayana and ancient Indian mythology. She writes for the modern reader — in clear, simple English — making sacred texts accessible to all ages without losing their spiritual essence.\n\nHer debut Kindle book, SundaraKandam: Hanuman's Divine Mission, is a heartfelt retelling of the most uplifting chapter of the Ramayana. Written especially for young readers and devotional seekers, it narrates Hanuman's courage, surrender, and boundless devotion in a way that feels both ancient and deeply personal.",
+  "shortBio": "Devotional fiction author bringing ancient epics to the modern reader — one story at a time.",
   "heroImage": "/images/aparnaa-hero.jpg",
   "profileImage": "/images/aparnaa-profile.jpg",
-  "authorQuote": "Every story is a thread in the tapestry of human consciousness. I write to help souls remember their own divine spark.",
+  "authorQuote": "The Ramayana is not just a story from the past. It is a mirror — and every time I write about Hanuman, I find a little more courage within myself.",
+  "penName": "Appu S R",
+  "location": "Chennai, India",
   "socialLinks": {
-    "instagram": "https://instagram.com/aparnaaravi",
-    "linkedin": "https://linkedin.com/in/aparnaaravi",
-    "facebook": "https://facebook.com/aparnaaraviauthor",
-    "youtube": "https://youtube.com/@aparnaaravi",
-    "pinterest": "https://pinterest.com/aparnaaravi",
-    "goodreads": "https://goodreads.com/aparnaaravi",
-    "amazon": "https://amazon.com/author/aparnaaravi"
+    "instagram": "",
+    "linkedin": "",
+    "facebook": "",
+    "youtube": "",
+    "amazon": "https://www.amazon.in/dp/B0GF2L5LX7"
   },
   "achievements": [
     {
-      "year": 2021,
-      "title": "First Kindle Publication",
-      "description": "Launched debut devotional fiction novel"
+      "year": 2026,
+      "title": "Debut Kindle Publication",
+      "description": "Published SundaraKandam: Hanuman's Divine Mission — a heartfelt retelling of the Ramayana's most uplifting chapter, reaching readers across India."
     },
     {
-      "year": 2022,
-      "title": "Bestseller Status",
-      "description": "Achieved bestseller ranking in Kindle mythology category"
+      "year": 2026,
+      "title": "Amazon Bestseller Rankings",
+      "description": "Ranked #1,386 in Indian Writing (Kindle Store), #1,551 in Religious & Inspirational Fiction eBooks, and #2,660 in Religious & Spiritual Fiction."
     },
     {
-      "year": 2023,
-      "title": "Community Growth",
-      "description": "Built engaged reader community of 10,000+ followers"
-    },
-    {
-      "year": 2024,
-      "title": "Multi-Book Author",
-      "description": "Released 5+ devotional fiction titles"
+      "year": 2026,
+      "title": "Kindle Unlimited Featured Title",
+      "description": "SundaraKandam was made available on Kindle Unlimited — enabling over 2 million readers to access devotional stories at no additional cost."
     }
   ],
   "writingAreas": [
     "Devotional Fiction",
-    "Mythology Retellings",
+    "Ramayana Retellings",
+    "Mythology for Young Readers",
     "Spiritual Storytelling",
-    "Children-Friendly Adaptations",
-    "Philosophical Fiction"
+    "Sanskrit Epic Adaptations"
   ],
   "contact": {
     "email": "hello@aparnaaravi.com",
-    "whatsapp": "+91-XXXXXXXXXX"
+    "whatsapp": ""
   }
 }

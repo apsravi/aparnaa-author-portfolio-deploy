@@ -2,39 +2,31 @@ import type { Metadata } from 'next';
 import './styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Aparnaa Ravi | Author • Storyteller • Devotional Fiction',
+  title: 'Aparnaa Ravi | Devotional Fiction Author — SundaraKandam',
   description:
-    'Discover devotional fiction that weaves ancient mythology with modern consciousness. Explore Aparnaa Ravi\'s published Kindle books and spiritual stories.',
+    'Aparnaa Ravi (pen name Appu S R) is a Chennai-based devotional fiction author. Her debut Kindle book SundaraKandam: Hanuman\'s Divine Mission retells the Ramayana for modern readers.',
   keywords:
-    'author, devotional fiction, mythology, spiritual storytelling, Kindle books, Aparnaa Ravi',
+    'Aparnaa Ravi, Appu S R, SundaraKandam, Hanuman, Ramayana, devotional fiction, Kindle, Indian mythology, spiritual fiction, Chennai author',
   authors: [{ name: 'Aparnaa Ravi' }],
-  viewport: 'width=device-width, initial-scale=1.0',
   openGraph: {
     type: 'website',
     url: 'https://aparnaaravi.com',
-    title: 'Aparnaa Ravi | Author • Storyteller',
-    description: 'Devotional fiction author crafting stories of transformation and spiritual awakening.',
-    images: [
-      {
-        url: '/images/aparnaa-hero.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Aparnaa Ravi',
-      },
-    ],
+    title: 'Aparnaa Ravi | Devotional Fiction Author',
+    description: 'Bringing the Ramayana to modern readers — SundaraKandam: Hanuman\'s Divine Mission on Kindle.',
+    images: [{ url: '/images/aparnaa-hero.jpg', width: 627, height: 1200, alt: 'Aparnaa Ravi' }],
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#D4AF37',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="theme-color" content="#D4AF37" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%23D4AF37'>A</text></svg>" />
       </head>
       <body className="bg-cream dark:bg-dark-bg text-charcoal dark:text-ivory transition-colors">

@@ -20,16 +20,9 @@ interface Author {
   profileImage: string;
   authorQuote: string;
   socialLinks: Record<string, string>;
-  achievements: Array<{
-    year: number;
-    title: string;
-    description: string;
-  }>;
+  achievements: Array<{ year: number; title: string; description: string }>;
   writingAreas: string[];
-  contact: {
-    email: string;
-    whatsapp: string;
-  };
+  contact: { email: string; whatsapp: string };
 }
 
 interface Book {
@@ -42,13 +35,14 @@ interface Book {
   rating: number;
   reviews: number;
   featured: boolean;
-  links: {
-    kindle?: string;
-    paperback?: string;
-    audiobook?: string | null;
-  };
+  links: { kindle?: string | null; paperback?: string | null; audiobook?: string | null };
   excerpt: string;
   tags: string[];
+  asin?: string;
+  pages?: number;
+  language?: string;
+  publishDate?: string;
+  price?: { kindle?: string; kindleUnlimited?: string };
 }
 
 interface Testimonial {
@@ -57,8 +51,13 @@ interface Testimonial {
   role: string;
   avatar: string;
   rating: number;
+  reviewTitle?: string;
   text: string;
   bookTitle: string;
+  platform?: string;
+  reviewDate?: string;
+  verified?: boolean;
+  format?: string;
 }
 
 export default function Home() {
@@ -76,30 +75,23 @@ export default function Home() {
           fetch('/content/books.json'),
           fetch('/content/testimonials.json'),
         ]);
-
-        const authorData = await authorRes.json();
-        const booksData = await booksRes.json();
-        const testimonialsData = await testimonialsRes.json();
-
-        setAuthor(authorData);
-        setBooks(booksData);
-        setTestimonials(testimonialsData);
-      } catch (error) {
-        console.error('Error loading content:', error);
+        setAuthor(await authorRes.json());
+        setBooks(await booksRes.json());
+        setTestimonials(await testimonialsRes.json());
+      } catch (e) {
+        console.error('Content load error:', e);
       } finally {
         setLoading(false);
       }
     };
-
     loadContent();
   }, []);
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-cream dark:bg-dark-bg">
-        <div className="animate-spin">
-          <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full" />
-        </div>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-cream dark:bg-dark-bg gap-4">
+        <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+        <p className="font-serif-body text-charcoal/50 dark:text-ivory/50 text-sm tracking-wide">Loading…</p>
       </div>
     );
   }
@@ -122,18 +114,22 @@ export default function Home() {
 
         {books.length > 0 && <BooksShowcase books={books} />}
 
-        {testimonials.length > 0 && <Testimonials testimonials={testimonials} />}
+        {/* Reviews anchor */}
+        <div id="reviews">
+          {testimonials.length > 0 && <Testimonials testimonials={testimonials} />}
+        </div>
 
         <ContactForm />
 
-        <Newsletter />
+        <div id="newsletter">
+          <Newsletter />
+        </div>
 
-        {author && (
-          <Footer
-            year={new Date().getFullYear()}
-            socialLinks={author.socialLinks}
-          />
-        )}
+        <Footer
+          year={new Date().getFullYear()}
+          socialLinks={author?.socialLinks}
+          contact={author?.contact}
+        />
       </main>
     </div>
   );
