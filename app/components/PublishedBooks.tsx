@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { fadeUpVariants, containerVariants } from '@/app/utils/animations';
 import { useInView } from '@/app/hooks/useInView';
 import { Star, ShoppingCart, BookOpen, Clock, ExternalLink, Award } from 'lucide-react';
+import { ZoomableImage } from '@/app/components/ImageLightbox';
 
 interface Book {
   id: string;
@@ -163,13 +164,13 @@ export const PublishedBooks = ({ books }: PublishedBooksProps) => {
                           : 'bg-amber-50/60 dark:bg-dark-gold/5 min-h-[180px]'
                       }`}>
                         {book.status === 'published' && getCoverUrl(book) ? (
-                          <img
+                          <ZoomableImage
                             src={getCoverUrl(book)!}
                             alt={book.title}
-                            className="w-full h-full object-cover sm:max-h-[220px]"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
+                            className="w-full h-full sm:max-h-[220px]"
+                            bookLink={book.links.kindle || undefined}
+                            bookTitle={book.title}
+                            bookSubtitle={book.subtitle}
                           />
                         ) : (
                           <div className="flex flex-col items-center justify-center p-6 gap-2">

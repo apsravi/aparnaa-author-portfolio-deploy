@@ -1,48 +1,79 @@
 'use client';
 
+/*
+  EmailJS SETUP (free — 200 emails/month):
+  ─────────────────────────────────────────
+  1. Create account at https://www.emailjs.com
+  2. Dashboard → Email Services → Add Service (Gmail recommended) → copy SERVICE_ID
+  3. Dashboard → Email Templates → Create template with variables:
+       Subject:  New subscriber: {{from_email}}
+       Body:     Name: {{from_name}}\nEmail: {{from_email}}
+     Copy TEMPLATE_ID
+  4. Dashboard → Account → Public Key → copy PUBLIC_KEY
+  5. In Netlify dashboard → Site settings → Environment variables, add:
+       NEXT_PUBLIC_EMAILJS_SERVICE_ID  = your service id
+       NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = your template id
+       NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  = your public key
+  6. Redeploy. Done — every subscriber sends you an email notification.
+*/
+
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fadeUpVariants, containerVariants } from '@/app/utils/animations';
 import { useInView } from '@/app/hooks/useInView';
-import { Mail, Check, AlertCircle } from 'lucide-react';
+import { Mail, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react';
+
+const SVC  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  || '';
+const TMPL = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
+const KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  || '';
+const IS_CONFIGURED = !!(SVC && TMPL && KEY);
+
+type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export const Newsletter = () => {
   const { ref, isVisible } = useInView();
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState('');
+  const [email, setEmail]   = useState('');
+  const [name, setName]     = useState('');
+  const [status, setStatus] = useState<Status>('idle');
+  const [msg, setMsg]       = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email) {
+  const validate = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+
+  const handleSubmit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (!validate(email)) {
       setStatus('error');
-      setMessage('Please enter your email');
+      setMsg('Please enter a valid email address.');
       return;
     }
-
     setStatus('loading');
-
     try {
-      // Simulate API call - replace with actual EmailJS integration
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      if (IS_CONFIGURED) {
+        const ejs = (await import('@emailjs/browser')).default;
+        await ejs.send(SVC, TMPL, { from_name: name.trim() || 'Reader', from_email: email }, KEY);
+      } else {
+        // Dev/demo: simulate delay
+        await new Promise(r => setTimeout(r, 1400));
+      }
       setStatus('success');
-      setMessage('Thank you for subscribing! Check your email.');
-      setEmail('');
-
-      setTimeout(() => {
-        setStatus('idle');
-      }, 5000);
-    } catch (error) {
+      setMsg("You're subscribed! Thank you for joining the community.");
+      setEmail(''); setName('');
+      setTimeout(() => setStatus('idle'), 7000);
+    } catch {
       setStatus('error');
-      setMessage('Something went wrong. Please try again.');
+      setMsg('Something went wrong. Please try again shortly.');
     }
   };
 
   return (
-    <section className="py-20 md:py-32 px-4 md:px-8 bg-gradient-gold dark:bg-dark-gold/10">
-      <div className="max-w-2xl mx-auto">
+    <section id="newsletter" className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
+      {/* Dark gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-charcoal via-brown/80 to-charcoal dark:from-[#0c0b09] dark:via-[#1a1510] dark:to-[#0c0b09]" />
+      {/* Decorative rings */}
+      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full border border-gold/8 pointer-events-none" />
+      <div className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full border border-gold/8 pointer-events-none" />
+
+      <div className="relative z-10 max-w-2xl mx-auto">
         <motion.div
           ref={ref}
           variants={containerVariants}
@@ -50,79 +81,115 @@ export const Newsletter = () => {
           animate={isVisible ? 'visible' : 'hidden'}
           className="text-center"
         >
-          <motion.div variants={fadeUpVariants}>
-            <Mail className="w-12 h-12 text-white dark:text-dark-gold mx-auto mb-6" />
+          {/* Icon */}
+          <motion.div variants={fadeUpVariants} className="flex justify-center mb-6">
+            <div className="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center">
+              <Mail className="w-6 h-6 text-gold" />
+            </div>
           </motion.div>
 
+          <motion.p variants={fadeUpVariants} className="text-gold/80 font-sans-modern tracking-widest text-xs uppercase mb-3">
+            Stay Connected
+          </motion.p>
+
           <motion.h2
-            className="font-serif-heading text-5xl md:text-6xl text-white dark:text-cream mb-4"
             variants={fadeUpVariants}
+            className="font-serif-heading text-cream mb-4"
+            style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)' }}
           >
             Join the Community
           </motion.h2>
 
-          <motion.p
-            className="text-white/90 dark:text-ivory/80 font-serif-body text-lg mb-8 leading-relaxed"
-            variants={fadeUpVariants}
-          >
-            Subscribe to receive exclusive updates about new releases, devotional reflections, and behind-the-scenes insights into my creative journey.
+          <motion.p variants={fadeUpVariants} className="text-cream/60 font-serif-body mb-10 leading-relaxed" style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)' }}>
+            Subscribe for early access to new book launches, devotional reflections, and behind-the-scenes glimpses into the writing journey.
           </motion.p>
 
-          {/* Newsletter Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-4"
-            variants={fadeUpVariants}
-          >
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-4 rounded-lg text-charcoal dark:text-dark-bg font-serif-body focus:outline-none focus:ring-2 focus:ring-white dark:focus:ring-cream"
-              disabled={status === 'loading' || status === 'success'}
-            />
-            <motion.button
-              type="submit"
-              className="px-8 py-4 bg-white dark:bg-cream text-charcoal dark:text-dark-bg font-serif-body font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={status === 'loading' || status === 'success'}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
-            </motion.button>
-          </motion.form>
+          {/* Form */}
+          <AnimatePresence mode="wait">
+            {status === 'success' ? (
+              <motion.div
+                key="success"
+                className="flex flex-col items-center gap-4 py-10"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+              >
+                <motion.div
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <CheckCircle2 className="w-14 h-14 text-green-400" />
+                </motion.div>
+                <p className="text-cream font-serif-heading text-xl">You're in!</p>
+                <p className="text-cream/60 font-serif-body text-sm">{msg}</p>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={handleSubmit}
+                className="space-y-3"
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                {/* Name + Email row */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Your name (optional)"
+                    disabled={status === 'loading'}
+                    className="flex-1 px-5 py-3.5 rounded-lg bg-white/10 border border-white/15 text-cream placeholder-cream/30 font-serif-body text-sm focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-gold/40 transition-all disabled:opacity-50"
+                  />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    required
+                    disabled={status === 'loading'}
+                    className="flex-1 px-5 py-3.5 rounded-lg bg-white/10 border border-white/15 text-cream placeholder-cream/30 font-serif-body text-sm focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-gold/40 transition-all disabled:opacity-50"
+                  />
+                </div>
 
-          {/* Status Messages */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{
-              opacity: status !== 'idle' ? 1 : 0,
-              y: status !== 'idle' ? 0 : 10,
-            }}
-            transition={{ duration: 0.3 }}
-            className="mt-4 flex items-center justify-center gap-2"
-          >
-            {status === 'success' && (
-              <>
-                <Check className="w-5 h-5 text-white dark:text-green-400" />
-                <span className="text-white dark:text-cream font-serif-body">{message}</span>
-              </>
-            )}
-            {status === 'error' && (
-              <>
-                <AlertCircle className="w-5 h-5 text-white dark:text-red-400" />
-                <span className="text-white dark:text-cream font-serif-body">{message}</span>
-              </>
-            )}
-          </motion.div>
+                {/* Error message */}
+                <AnimatePresence>
+                  {status === 'error' && (
+                    <motion.div
+                      className="flex items-center gap-2 text-red-400 text-sm font-serif-body"
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      {msg}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-          <motion.p
-            className="text-white/70 dark:text-ivory/60 font-serif-body text-sm mt-6"
-            variants={fadeUpVariants}
-          >
-            No spam, just meaningful content. Unsubscribe anytime.
-          </motion.p>
+                {/* Submit */}
+                <motion.button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-gold hover:bg-amber-500 text-charcoal font-serif-body font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-premium"
+                  whileHover={status !== 'loading' ? { scale: 1.02, y: -1 } : {}}
+                  whileTap={status !== 'loading' ? { scale: 0.98 } : {}}
+                >
+                  {status === 'loading' ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> Subscribing…</>
+                  ) : (
+                    <><Sparkles className="w-4 h-4" /> Subscribe</>
+                  )}
+                </motion.button>
+
+                <p className="text-cream/30 font-sans-modern text-xs tracking-wide">
+                  No spam, ever. Unsubscribe anytime.
+                  {!IS_CONFIGURED && ' (Demo mode — configure EmailJS to activate)'}
+                </p>
+              </motion.form>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

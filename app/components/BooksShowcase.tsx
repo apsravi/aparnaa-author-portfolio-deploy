@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { fadeUpVariants, containerVariants } from '@/app/utils/animations';
 import { useInView } from '@/app/hooks/useInView';
 import { Star, BookOpen, ShoppingCart, Award, ExternalLink } from 'lucide-react';
+import { ZoomableImage } from '@/app/components/ImageLightbox';
 
 interface BookLink {
   kindle?: string | null;
@@ -108,20 +109,19 @@ export const BooksShowcase = ({ books }: BooksProps) => {
                   </div>
                   <motion.div
                     className="relative"
-                    whileHover={{ scale: 1.05, rotate: 1 }}
+                    whileHover={{ scale: 1.03, rotate: 0.5 }}
                     transition={{ duration: 0.3 }}
                   >
                     <div className="shadow-[0_20px_60px_rgba(0,0,0,0.3)] rounded-lg overflow-hidden w-56">
-                      <img
-                        src={getCoverUrl(featuredBook)}
+                      <ZoomableImage
+                        src={getCoverUrl(featuredBook) || ''}
                         alt={featuredBook.title}
-                        className="w-full h-auto object-cover"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x600/D4AF37/ffffff?text=SundaraKandam';
-                        }}
+                        bookLink={featuredBook.links.kindle || undefined}
+                        bookTitle={featuredBook.title}
+                        bookSubtitle={featuredBook.subtitle}
                       />
                     </div>
-                    {/* Floating badges */}
+                    {/* Floating badge */}
                     <div className="absolute -top-3 -right-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">
                       FREE on KU
                     </div>
