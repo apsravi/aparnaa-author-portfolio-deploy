@@ -60,7 +60,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.3 }}
           >
             <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop"
+              src="/images/aparnaa-profile.jpg"
               alt="Aparnaa Ravi"
               className="w-full h-full object-cover"
             />

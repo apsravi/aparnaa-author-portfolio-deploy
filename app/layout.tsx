@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Devotional fiction author crafting stories of transformation and spiritual awakening.',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&h=630&fit=crop',
+        url: '/images/aparnaa-hero.jpg',
         width: 1200,
         height: 630,
         alt: 'Aparnaa Ravi',
