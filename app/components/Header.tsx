@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Instagram } from 'lucide-react';
 import { useTheme } from '@/app/hooks/useTheme';
+
+const INSTAGRAM_URL = 'https://www.instagram.com/appusrwrites?igsh=Njh2dDdyaGJybHV0';
 
 export const Header = () => {
   const { theme, toggleTheme, mounted } = useTheme();
@@ -69,7 +71,20 @@ export const Header = () => {
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {/* Instagram link */}
+          <motion.a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:flex p-2 rounded-lg hover:bg-charcoal/10 dark:hover:bg-gold/10 transition-colors items-center gap-1.5 text-charcoal dark:text-gold"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Follow on Instagram"
+          >
+            <Instagram className="w-5 h-5" />
+          </motion.a>
+
           {mounted && (
             <motion.button
               onClick={toggleTheme}
@@ -119,6 +134,16 @@ export const Header = () => {
                   {item.label}
                 </Link>
               ))}
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-charcoal dark:text-ivory font-serif-body hover:text-gold dark:hover:text-gold transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Instagram className="w-4 h-4" />
+                @appusrwrites
+              </a>
             </div>
           </motion.div>
         )}

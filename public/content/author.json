@@ -9,7 +9,7 @@
   "penName": "Appu S R",
   "location": "Chennai, India",
   "socialLinks": {
-    "instagram": "",
+    "instagram": "https://www.instagram.com/appusrwrites?igsh=Njh2dDdyaGJybHV0",
     "linkedin": "",
     "facebook": "",
     "youtube": "",
@@ -17,19 +17,24 @@
   },
   "achievements": [
     {
+      "year": 2025,
+      "title": "The Writing Journey Begins",
+      "description": "Aparnaa began her devotional writing journey in 2025, driven by a deep desire to bring the Ramayana's wisdom to modern readers in simple, accessible English."
+    },
+    {
       "year": 2026,
       "title": "Debut Kindle Publication",
-      "description": "Published SundaraKandam: Hanuman's Divine Mission — a heartfelt retelling of the Ramayana's most uplifting chapter, reaching readers across India."
+      "description": "Published SundaraKandam: Hanuman's Divine Mission in January 2026 — a heartfelt retelling of the Ramayana's most uplifting chapter for readers of all ages."
     },
     {
       "year": 2026,
       "title": "Amazon Bestseller Rankings",
-      "description": "Ranked #1,386 in Indian Writing (Kindle Store), #1,551 in Religious & Inspirational Fiction eBooks, and #2,660 in Religious & Spiritual Fiction."
+      "description": "Debuted at #1,386 in Indian Writing (Kindle Store), #1,551 in Religious & Inspirational Fiction eBooks, and #2,660 in Religious & Spiritual Fiction — all within weeks of launch."
     },
     {
       "year": 2026,
-      "title": "Kindle Unlimited Featured Title",
-      "description": "SundaraKandam was made available on Kindle Unlimited — enabling over 2 million readers to access devotional stories at no additional cost."
+      "title": "More Books in the Making",
+      "description": "Currently working on a series of spiritual, children-friendly books to be published on Kindle — continuing the mission of making India's sacred stories joyful and accessible."
     }
   ],
   "writingAreas": [
@@ -37,7 +42,7 @@
     "Ramayana Retellings",
     "Mythology for Young Readers",
     "Spiritual Storytelling",
-    "Sanskrit Epic Adaptations"
+    "Children-Friendly Adaptations"
   ],
   "contact": {
     "email": "hello@aparnaaravi.com",

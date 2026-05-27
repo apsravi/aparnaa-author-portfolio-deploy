@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Mail, Heart, ExternalLink, BookOpen } from 'lucide-react';
+import { Mail, Heart, ExternalLink, BookOpen, Instagram } from 'lucide-react';
 
 interface FooterProps {
   year?: number;
@@ -20,6 +20,7 @@ export const Footer = ({ year = new Date().getFullYear(), socialLinks = {}, cont
   ];
 
   const amazonLink = socialLinks?.amazon || 'https://www.amazon.in/dp/B0GF2L5LX7';
+  const instagramLink = socialLinks?.instagram || '';
 
   return (
     <footer className="bg-charcoal dark:bg-[#0a0906] text-cream py-16 px-4 md:px-8">
@@ -44,21 +45,35 @@ export const Footer = ({ year = new Date().getFullYear(), socialLinks = {}, cont
                 <p className="text-cream/40 text-xs font-sans-modern">Pen name: Appu S R</p>
               </div>
             </div>
-            <p className="font-serif-body text-cream/60 text-sm leading-relaxed mb-4">
+            <p className="font-serif-body text-cream/60 text-sm leading-relaxed mb-5">
               Devotional fiction author bringing the Ramayana and ancient epics to modern readers — one heartfelt story at a time.
             </p>
-            {/* Amazon CTA */}
-            <motion.a
-              href={amazonLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-lg text-gold text-sm font-serif-body transition-all"
-              whileHover={{ scale: 1.03 }}
-            >
-              <BookOpen className="w-4 h-4" />
-              View on Amazon India
-              <ExternalLink className="w-3 h-3" />
-            </motion.a>
+
+            {/* Social links */}
+            <div className="flex gap-3">
+              {instagramLink && (
+                <motion.a
+                  href={instagramLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-lg bg-gold/10 hover:bg-gold/20 border border-gold/20 flex items-center justify-center text-gold transition-all"
+                  whileHover={{ scale: 1.1 }}
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </motion.a>
+              )}
+              <motion.a
+                href={amazonLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-gold/10 hover:bg-gold/20 border border-gold/20 flex items-center justify-center text-gold transition-all"
+                whileHover={{ scale: 1.1 }}
+                aria-label="Amazon Author Page"
+              >
+                <BookOpen className="w-4 h-4" />
+              </motion.a>
+            </div>
           </div>
 
           {/* Quick links */}
@@ -78,21 +93,40 @@ export const Footer = ({ year = new Date().getFullYear(), socialLinks = {}, cont
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact + Amazon CTA */}
           <div>
             <h3 className="font-serif-heading text-gold text-base mb-5 tracking-wide">Get in Touch</h3>
             {contact?.email && (
               <a
                 href={`mailto:${contact.email}`}
-                className="flex items-center gap-2 text-cream/60 hover:text-gold transition-colors font-serif-body text-sm mb-4"
+                className="flex items-center gap-2 text-cream/60 hover:text-gold transition-colors font-serif-body text-sm mb-5"
               >
                 <Mail className="w-4 h-4" />
                 {contact.email}
               </a>
             )}
-            <p className="text-cream/40 font-serif-body text-xs leading-relaxed">
-              For reader queries, collaborations, or book club requests — reach out anytime.
-            </p>
+            {instagramLink && (
+              <a
+                href={instagramLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-cream/60 hover:text-gold transition-colors font-serif-body text-sm mb-5"
+              >
+                <Instagram className="w-4 h-4" />
+                @appusrwrites
+              </a>
+            )}
+            <motion.a
+              href={amazonLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-lg text-gold text-sm font-serif-body transition-all"
+              whileHover={{ scale: 1.03 }}
+            >
+              <BookOpen className="w-4 h-4" />
+              View Book on Amazon
+              <ExternalLink className="w-3 h-3" />
+            </motion.a>
           </div>
         </motion.div>
 
@@ -101,7 +135,7 @@ export const Footer = ({ year = new Date().getFullYear(), socialLinks = {}, cont
 
         {/* Bottom bar */}
         <motion.div
-          className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left"
+          className="flex flex-col md:flex-row items-center justify-between gap-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -114,6 +148,7 @@ export const Footer = ({ year = new Date().getFullYear(), socialLinks = {}, cont
             Made with <Heart className="w-3.5 h-3.5 fill-gold text-gold mx-0.5" /> for devotional readers
           </div>
         </motion.div>
+
       </div>
     </footer>
   );
