@@ -69,8 +69,8 @@ export const HeroSection = () => {
             animate="visible"
             custom={1}
           >
-            Aparnaa
-            <span className="block text-gold dark:text-dark-gold">Ravi</span>
+            Appu
+            <span className="block text-gold dark:text-dark-gold">S R</span>
           </motion.h1>
 
           {/* Tagline */}
@@ -188,7 +188,7 @@ export const HeroSection = () => {
             >
               <img
                 src="/images/aparnaa-hero.jpg"
-                alt="Aparnaa Ravi — Author"
+                alt="Appu S R — Author"
                 className="w-full h-full object-cover object-top"
                 style={{ maxHeight: '600px' }}
               />

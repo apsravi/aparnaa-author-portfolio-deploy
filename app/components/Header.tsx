@@ -26,6 +26,7 @@ export const Header = () => {
     { label: 'Home', href: '#' },
     { label: 'About', href: '#about' },
     { label: 'Books', href: '#books' },
+    { label: 'Bibliography', href: '#published-books' },
     { label: 'Reviews', href: '#reviews' },
     { label: 'Contact', href: '#contact' },
   ];
@@ -52,7 +53,7 @@ export const Header = () => {
             AR
           </motion.div>
           <span className="hidden sm:inline font-serif-heading text-lg font-semibold text-charcoal dark:text-gold group-hover:text-gold dark:group-hover:text-cream transition-colors">
-            Aparnaa Ravi
+            Appu S R
           </span>
         </Link>
 

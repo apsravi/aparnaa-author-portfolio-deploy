@@ -57,7 +57,7 @@ export const AboutAuthor = ({ bio, profileImage, achievements, quote, writingAre
             >
               <img
                 src={profileImage}
-                alt="Aparnaa Ravi"
+                alt="Appu S R"
                 className="w-full h-auto object-cover object-top"
                 style={{ maxHeight: '520px' }}
               />
@@ -127,7 +127,7 @@ export const AboutAuthor = ({ bio, profileImage, achievements, quote, writingAre
             <p className="font-serif-heading text-xl md:text-2xl text-cream dark:text-cream italic leading-relaxed max-w-3xl mx-auto">
               {quote}
             </p>
-            <p className="mt-6 text-sm text-cream/50 dark:text-ivory/40 font-sans-modern tracking-widest uppercase">— Aparnaa Ravi</p>
+            <p className="mt-6 text-sm text-cream/50 dark:text-ivory/40 font-sans-modern tracking-widest uppercase">— Appu S R</p>
           </div>
         </motion.div>
 

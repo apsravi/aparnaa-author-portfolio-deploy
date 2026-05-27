@@ -41,7 +41,7 @@ export const Footer = ({ year = new Date().getFullYear(), socialLinks = {}, cont
                 AR
               </div>
               <div>
-                <p className="font-serif-heading text-cream text-lg leading-none">Aparnaa Ravi</p>
+                <p className="font-serif-heading text-cream text-lg leading-none">Appu S R</p>
                 <p className="text-cream/40 text-xs font-sans-modern">Pen name: Appu S R</p>
               </div>
             </div>
@@ -142,7 +142,7 @@ export const Footer = ({ year = new Date().getFullYear(), socialLinks = {}, cont
           transition={{ delay: 0.3 }}
         >
           <p className="font-serif-body text-cream/40 text-sm">
-            © {year} Aparnaa Ravi (Appu S R). All rights reserved.
+            © {year} Appu S R. All rights reserved.
           </p>
           <div className="flex items-center gap-1.5 text-cream/40 font-serif-body text-sm">
             Made with <Heart className="w-3.5 h-3.5 fill-gold text-gold mx-0.5" /> for devotional readers

@@ -1,124 +1,153 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=Lora:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply transition-colors duration-300;
+/* ── Base reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-  @apply bg-cream dark:bg-dark-bg text-charcoal dark:text-ivory;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
   font-family: 'Lora', Georgia, serif;
   line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-cream dark:bg-dark-bg text-charcoal dark:text-ivory;
+  overflow-x: hidden;
 }
 
+/* ── Typography ── */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Crimson Text', Georgia, serif;
   @apply font-normal tracking-wide;
+  line-height: 1.15;
 }
 
-h1 {
-  @apply text-5xl md:text-6xl;
+/* ── Responsive type scale ── */
+h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(1.8rem, 5vw, 3.5rem); }
+h3 { font-size: clamp(1.4rem, 3.5vw, 2rem); }
+
+p, li {
+  font-size: clamp(0.95rem, 2vw, 1.125rem);
 }
 
-h2 {
-  @apply text-4xl md:text-5xl;
+/* ── Responsive images ── */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-h3 {
-  @apply text-2xl md:text-3xl;
+/* ── Responsive containers ── */
+.container-responsive {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 4rem);
 }
 
-/* Smooth gradient backgrounds */
+/* ── Premium gradients ── */
 .gradient-premium {
   background: linear-gradient(135deg, #FAF8F3 0%, #E8DED3 100%);
-  @apply dark:bg-gradient-to-br dark:from-dark-surface dark:to-dark-bg;
+}
+.dark .gradient-premium {
+  background: linear-gradient(135deg, #1A1A1A 0%, #0F0F0F 100%);
 }
 
 .gradient-gold {
   background: linear-gradient(135deg, #D4AF37 0%, #C9A961 100%);
 }
 
-/* Floating animation */
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-/* Premium button styles */
+/* ── Buttons ── */
 .btn-premium {
-  @apply px-8 py-4 font-medium tracking-wide transition-all duration-300 hover:scale-105;
+  @apply inline-flex items-center justify-center gap-2 font-medium tracking-wide transition-all duration-300;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0.5rem;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  min-height: 44px; /* touch target */
+  min-width: 44px;
 }
 
 .btn-primary {
-  @apply btn-premium bg-charcoal text-cream dark:bg-gold dark:text-dark-bg hover:shadow-premium;
+  @apply btn-premium bg-charcoal text-cream dark:bg-gold dark:text-dark-bg;
 }
+.btn-primary:hover { @apply opacity-90 scale-105; }
 
 .btn-secondary {
-  @apply btn-premium border-2 border-charcoal text-charcoal dark:border-gold dark:text-gold hover:bg-charcoal dark:hover:bg-gold hover:text-cream dark:hover:text-dark-bg;
+  @apply btn-premium border-2 border-charcoal text-charcoal dark:border-gold dark:text-gold;
 }
+.btn-secondary:hover { @apply bg-charcoal text-cream dark:bg-gold dark:text-dark-bg; }
 
-/* Premium card */
+/* ── Cards ── */
 .card-premium {
-  @apply bg-white dark:bg-dark-surface rounded-lg shadow-elevation-2 dark:shadow-none border border-beige dark:border-dark-bg/20 transition-all duration-300 hover:shadow-elevation-3;
+  @apply bg-white dark:bg-dark-surface rounded-xl border border-beige dark:border-dark-gold/10 transition-all duration-300;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.card-premium:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
 }
 
-/* Text utilities */
-.text-premium {
-  @apply text-charcoal dark:text-gold font-semibold;
+/* ── Animations ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+.float { animation: float 5s ease-in-out infinite; }
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
-.text-muted {
-  @apply text-brown/60 dark:text-ivory/60;
-}
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { @apply bg-cream dark:bg-dark-surface; }
+::-webkit-scrollbar-thumb { @apply bg-gold/40 dark:bg-dark-gold/40 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-gold dark:bg-dark-gold; }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-cream dark:bg-dark-surface;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-beige dark:bg-dark-gold rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-brown dark:bg-gold;
-}
-
-/* Focus states */
-a:focus, button:focus {
+/* ── Focus ── */
+a:focus-visible, button:focus-visible {
   @apply outline-none ring-2 ring-gold ring-offset-2 dark:ring-offset-dark-bg;
+  border-radius: 4px;
 }
 
-/* Loading animation */
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ── Mobile touch targets ── */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.spin-slow {
-  animation: spin-slow 3s linear infinite;
+/* ── Line clamp utility ── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Theme transition ── */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease;
+}
+
+/* Exclude transform & shadow from slow transition */
+.card-premium, button, a {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease,
+              transform 0.25s ease, box-shadow 0.25s ease, opacity 0.2s ease;
 }
