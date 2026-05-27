@@ -1,0 +1,97 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/images
+public_path: /images
+
+collections:
+  - name: author
+    label: Author Profile
+    files:
+      - name: author
+        label: Author Information
+        file: public/content/author.json
+        fields:
+          - { name: name, label: Author Name, widget: string }
+          - { name: tagline, label: Tagline, widget: string }
+          - { name: bio, label: Biography, widget: markdown }
+          - { name: shortBio, label: Short Bio, widget: string }
+          - { name: heroImage, label: Hero Image, widget: image }
+          - { name: profileImage, label: Profile Image, widget: image }
+          - { name: authorQuote, label: Author Quote, widget: text }
+          - name: socialLinks
+            label: Social Media Links
+            widget: object
+            fields:
+              - { name: instagram, label: Instagram, widget: string, required: false }
+              - { name: linkedin, label: LinkedIn, widget: string, required: false }
+              - { name: facebook, label: Facebook, widget: string, required: false }
+              - { name: youtube, label: YouTube, widget: string, required: false }
+              - { name: pinterest, label: Pinterest, widget: string, required: false }
+          - name: achievements
+            label: Achievements
+            widget: list
+            fields:
+              - { name: year, label: Year, widget: number }
+              - { name: title, label: Title, widget: string }
+              - { name: description, label: Description, widget: string }
+          - name: writingAreas
+            label: Writing Areas
+            widget: list
+            field: { name: area, label: Area, widget: string }
+          - name: contact
+            label: Contact Information
+            widget: object
+            fields:
+              - { name: email, label: Email, widget: string }
+              - { name: whatsapp, label: WhatsApp, widget: string, required: false }
+
+  - name: books
+    label: Books
+    folder: public/content
+    file: books.json
+    fields:
+      - name: books
+        label: Books
+        widget: list
+        fields:
+          - { name: id, label: ID, widget: string }
+          - { name: title, label: Title, widget: string }
+          - { name: subtitle, label: Subtitle, widget: string }
+          - { name: description, label: Description, widget: markdown }
+          - { name: genre, label: Genre, widget: string }
+          - { name: coverImage, label: Cover Image, widget: image }
+          - { name: publishDate, label: Publish Date, widget: date }
+          - { name: rating, label: Rating, widget: number, min: 0, max: 5, step: 0.1 }
+          - { name: reviews, label: Number of Reviews, widget: number }
+          - { name: featured, label: Featured, widget: boolean }
+          - name: links
+            label: Purchase Links
+            widget: object
+            fields:
+              - { name: kindle, label: Kindle Link, widget: string, required: false }
+              - { name: paperback, label: Paperback Link, widget: string, required: false }
+              - { name: audiobook, label: Audiobook Link, widget: string, required: false }
+          - { name: excerpt, label: Excerpt, widget: text }
+          - name: tags
+            label: Tags
+            widget: list
+            field: { name: tag, label: Tag, widget: string }
+
+  - name: testimonials
+    label: Testimonials
+    folder: public/content
+    file: testimonials.json
+    fields:
+      - name: testimonials
+        label: Testimonials
+        widget: list
+        fields:
+          - { name: id, label: ID, widget: string }
+          - { name: name, label: Reader Name, widget: string }
+          - { name: role, label: Role/Title, widget: string }
+          - { name: avatar, label: Avatar Initials, widget: string, hint: "2 character initials" }
+          - { name: rating, label: Rating, widget: number, min: 1, max: 5 }
+          - { name: text, label: Testimonial Text, widget: text }
+          - { name: bookTitle, label: Book Title, widget: string }

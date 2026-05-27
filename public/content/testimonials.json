@@ -1,0 +1,47 @@
+[
+  {
+    "id": "testimonial-1",
+    "name": "Priya Sharma",
+    "role": "Reader & Spiritual Seeker",
+    "avatar": "PS",
+    "rating": 5,
+    "text": "Aparnaa's writing touched my soul in ways I didn't expect. Her blend of mythology and spirituality is refreshing and deeply transformative. I've read 'The Divine Thread' three times and discover something new each time.",
+    "bookTitle": "The Divine Thread"
+  },
+  {
+    "id": "testimonial-2",
+    "name": "Rajesh Kumar",
+    "role": "Book Blogger",
+    "avatar": "RK",
+    "rating": 5,
+    "text": "As someone who reviews books regularly, I can say that Aparnaa Ravi is one of the most talented contemporary authors in the devotional fiction space. Her characters are vivid, her prose is poetic, and her spiritual depth is unmatched.",
+    "bookTitle": "Echoes of the Soul"
+  },
+  {
+    "id": "testimonial-3",
+    "name": "Aisha Patel",
+    "role": "Literary Enthusiast",
+    "avatar": "AP",
+    "rating": 5,
+    "text": "I recommend Aparnaa's books to everyone. They're perfect for anyone seeking meaning, spirituality, and beautiful storytelling. Her work reminds us of the divine in everyday life.",
+    "bookTitle": "The Goddess Within"
+  },
+  {
+    "id": "testimonial-4",
+    "name": "Vikram Singh",
+    "role": "Philosophy Student",
+    "avatar": "VS",
+    "rating": 4.8,
+    "text": "Using Aparnaa's books as supplementary reading in my philosophy class. They make abstract concepts accessible and emotionally resonant. Students absolutely love them.",
+    "bookTitle": "Karma & Coffee"
+  },
+  {
+    "id": "testimonial-5",
+    "name": "Meera Iyer",
+    "role": "Yoga Instructor",
+    "avatar": "MI",
+    "rating": 5,
+    "text": "I gift Aparnaa's books to my students. They align perfectly with yogic philosophy and spiritual practice. Her writing is a modern bridge to ancient wisdom.",
+    "bookTitle": "The Divine Thread"
+  }
+]

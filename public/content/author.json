@@ -1,0 +1,51 @@
+{
+  "name": "Aparnaa Ravi",
+  "tagline": "Author • Storyteller • Devotional Fiction Writer",
+  "bio": "Aparnaa Ravi is a passionate devotional fiction writer whose work weaves mythology, spirituality, and modern storytelling into deeply engaging narratives. With a profound connection to ancient Indian mythology and contemporary spiritual themes, her books inspire readers to explore their own spiritual journeys through compelling characters and transformative stories.",
+  "shortBio": "Devotional fiction author crafting stories where ancient wisdom meets modern hearts.",
+  "heroImage": "/images/aparnaa-hero.jpg",
+  "profileImage": "/images/aparnaa-profile.jpg",
+  "authorQuote": "Every story is a thread in the tapestry of human consciousness. I write to help souls remember their own divine spark.",
+  "socialLinks": {
+    "instagram": "https://instagram.com/aparnaaravi",
+    "linkedin": "https://linkedin.com/in/aparnaaravi",
+    "facebook": "https://facebook.com/aparnaaraviauthor",
+    "youtube": "https://youtube.com/@aparnaaravi",
+    "pinterest": "https://pinterest.com/aparnaaravi",
+    "goodreads": "https://goodreads.com/aparnaaravi",
+    "amazon": "https://amazon.com/author/aparnaaravi"
+  },
+  "achievements": [
+    {
+      "year": 2021,
+      "title": "First Kindle Publication",
+      "description": "Launched debut devotional fiction novel"
+    },
+    {
+      "year": 2022,
+      "title": "Bestseller Status",
+      "description": "Achieved bestseller ranking in Kindle mythology category"
+    },
+    {
+      "year": 2023,
+      "title": "Community Growth",
+      "description": "Built engaged reader community of 10,000+ followers"
+    },
+    {
+      "year": 2024,
+      "title": "Multi-Book Author",
+      "description": "Released 5+ devotional fiction titles"
+    }
+  ],
+  "writingAreas": [
+    "Devotional Fiction",
+    "Mythology Retellings",
+    "Spiritual Storytelling",
+    "Children-Friendly Adaptations",
+    "Philosophical Fiction"
+  ],
+  "contact": {
+    "email": "hello@aparnaaravi.com",
+    "whatsapp": "+91-XXXXXXXXXX"
+  }
+}
