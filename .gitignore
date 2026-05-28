@@ -18,3 +18,5 @@ yarn-error.log*
 .vscode/
 *.iml
 .eslintcache
+out/
+.next/
