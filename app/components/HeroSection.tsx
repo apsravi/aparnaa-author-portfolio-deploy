@@ -1,19 +1,25 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { fadeUpVariants } from '@/app/utils/animations';
 import { ChevronDown, BookOpen, User, Mail } from 'lucide-react';
+import { MagneticWrap } from '@/app/components/AnimatedSection';
 
 export const HeroSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const bgY    = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden pt-16">
 
       {/* ── Background layers ── */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-cream via-ivory to-beige dark:from-[#0c0b09] dark:via-[#12100d] dark:to-[#1a1612]" />
+      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 bg-gradient-to-br from-cream via-ivory to-beige dark:from-[#0c0b09] dark:via-[#12100d] dark:to-[#1a1612]" />
 
       {/* Warm radial glow behind author photo */}
       <div className="absolute right-0 top-0 w-1/2 h-full z-0 pointer-events-none">
@@ -106,60 +112,50 @@ export const HeroSection = () => {
 
           {/* CTAs */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            custom={4}
+            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start flex-wrap"
+            variants={fadeUpVariants} initial="hidden" animate="visible" custom={4}
           >
-            <motion.button
-              onClick={() => scrollTo('books')}
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-charcoal dark:bg-gold text-cream dark:text-dark-bg font-serif-body font-semibold rounded-lg hover:opacity-90 transition-all shadow-elevation-2"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <BookOpen className="w-4 h-4" />
-              Explore Books
-            </motion.button>
+            <MagneticWrap>
+              <motion.button onClick={() => scrollTo('books')}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-charcoal dark:bg-gold text-cream dark:text-dark-bg font-serif-body font-semibold rounded-lg hover:opacity-90 transition-all shadow-elevation-2"
+                whileHover={{ scale: 1.04, y: -3, boxShadow: '0 12px 40px rgba(212,175,55,0.3)' }}
+                whileTap={{ scale: 0.97 }}>
+                <BookOpen className="w-4 h-4" /> Explore Books
+              </motion.button>
+            </MagneticWrap>
 
-            <motion.button
-              onClick={() => scrollTo('about')}
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border-2 border-charcoal dark:border-gold text-charcoal dark:text-gold font-serif-body font-semibold rounded-lg hover:bg-charcoal dark:hover:bg-gold hover:text-cream dark:hover:text-dark-bg transition-all"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <User className="w-4 h-4" />
-              About the Author
-            </motion.button>
+            <MagneticWrap>
+              <motion.button onClick={() => scrollTo('about')}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border-2 border-charcoal dark:border-gold text-charcoal dark:text-gold font-serif-body font-semibold rounded-lg hover:bg-charcoal dark:hover:bg-gold hover:text-cream dark:hover:text-dark-bg transition-all"
+                whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}>
+                <User className="w-4 h-4" /> About the Author
+              </motion.button>
+            </MagneticWrap>
 
-            <motion.button
-              onClick={() => scrollTo('newsletter')}
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border-2 border-charcoal/30 dark:border-gold/30 text-charcoal/70 dark:text-gold/70 font-serif-body font-semibold rounded-lg hover:border-charcoal dark:hover:border-gold hover:text-charcoal dark:hover:text-gold transition-all"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <Mail className="w-4 h-4" />
-              Subscribe
-            </motion.button>
+            <MagneticWrap>
+              <motion.button onClick={() => scrollTo('newsletter')}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border-2 border-charcoal/30 dark:border-gold/30 text-charcoal/70 dark:text-gold/70 font-serif-body font-semibold rounded-lg hover:border-charcoal dark:hover:border-gold hover:text-charcoal dark:hover:text-gold transition-all"
+                whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}>
+                <Mail className="w-4 h-4" /> Subscribe
+              </motion.button>
+            </MagneticWrap>
           </motion.div>
 
           {/* Book stat strip */}
-          <motion.div
-            className="flex items-center gap-6 mt-12 justify-center md:justify-start"
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            custom={5}
-          >
+          <motion.div className="flex items-center gap-8 mt-12 justify-center md:justify-start"
+            variants={fadeUpVariants} initial="hidden" animate="visible" custom={5}>
             {[
-              { value: '5.0★', label: 'Rating' },
-              { value: '₹199', label: 'Kindle' },
-              { value: 'Free', label: 'KU Access' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="font-serif-heading text-xl text-charcoal dark:text-gold font-bold">{stat.value}</p>
-                <p className="text-xs text-charcoal/40 dark:text-ivory/40 font-sans-modern uppercase tracking-wider">{stat.label}</p>
-              </div>
+              { value: '5.0★', label: 'Amazon Rating', color: 'text-gold dark:text-dark-gold' },
+              { value: '₹199', label: 'Kindle Price', color: 'text-charcoal dark:text-cream' },
+              { value: 'Free', label: 'on Kindle Unlimited', color: 'text-green-600 dark:text-green-400' },
+            ].map((stat, i) => (
+              <motion.div key={stat.label} className="text-center"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + i * 0.12 }}>
+                <p className={`font-serif-heading text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                <p className="text-xs text-charcoal/40 dark:text-ivory/40 font-sans-modern uppercase tracking-wider mt-0.5">{stat.label}</p>
+              </motion.div>
             ))}
           </motion.div>
         </div>

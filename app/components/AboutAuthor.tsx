@@ -1,9 +1,11 @@
 'use client';
 
+
 import { motion } from 'framer-motion';
 import { fadeUpVariants, containerVariants } from '@/app/utils/animations';
 import { useInView } from '@/app/hooks/useInView';
 import { BookOpen, MapPin, Feather } from 'lucide-react';
+import { BlurReveal, StaggerContainer, StaggerItem } from '@/app/components/AnimatedSection';
 
 interface Achievement {
   year: number;
@@ -95,22 +97,25 @@ export const AboutAuthor = ({ bio, profileImage, achievements, quote, writingAre
             ))}
 
             {/* Writing areas */}
-            <motion.div variants={fadeUpVariants}>
+            <BlurReveal delay={0.2}>
               <div className="flex items-center gap-2 mb-4">
                 <BookOpen className="w-4 h-4 text-gold dark:text-dark-gold" />
                 <h3 className="text-gold dark:text-dark-gold font-serif-heading text-lg">Writing Specialisations</h3>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <StaggerContainer className="flex flex-wrap gap-2">
                 {writingAreas.map((area) => (
-                  <span
-                    key={area}
-                    className="px-4 py-1.5 bg-cream dark:bg-dark-bg border border-gold/20 dark:border-dark-gold/20 text-charcoal dark:text-ivory rounded-full text-sm font-serif-body"
-                  >
-                    {area}
-                  </span>
+                  <StaggerItem key={area}>
+                    <motion.span
+                      className="px-4 py-1.5 bg-cream dark:bg-dark-bg border border-gold/20 dark:border-dark-gold/20 text-charcoal dark:text-ivory rounded-full text-sm font-serif-body inline-block"
+                      whileHover={{ scale: 1.06, borderColor: 'rgba(212,175,55,0.6)', y: -2 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {area}
+                    </motion.span>
+                  </StaggerItem>
                 ))}
-              </div>
-            </motion.div>
+              </StaggerContainer>
+            </BlurReveal>
           </motion.div>
         </motion.div>
 

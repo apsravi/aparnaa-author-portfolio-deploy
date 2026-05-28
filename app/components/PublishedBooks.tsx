@@ -5,6 +5,7 @@ import { fadeUpVariants, containerVariants } from '@/app/utils/animations';
 import { useInView } from '@/app/hooks/useInView';
 import { Star, ShoppingCart, BookOpen, Clock, ExternalLink, Award } from 'lucide-react';
 import { ZoomableImage } from '@/app/components/ImageLightbox';
+import { AnimatedCounter, ScaleReveal } from '@/app/components/AnimatedSection';
 
 interface Book {
   id: string;
@@ -89,17 +90,19 @@ export const PublishedBooks = ({ books }: PublishedBooksProps) => {
             Every book, sorted by year of publication
           </p>
 
-          {/* Stats row */}
-          <div className="flex flex-wrap justify-center gap-6 mt-8">
+          {/* Stats row — animated counters */}
+          <div className="flex flex-wrap justify-center gap-8 mt-8">
             {[
-              { val: published.length, label: 'Published' },
-              { val: upcoming.length, label: 'Coming Soon' },
-              { val: `${published.reduce((a, b) => a + ((b.pages ?? 0)), 0)}+`, label: 'Pages Written' },
-            ].map(s => (
-              <div key={s.label} className="text-center">
-                <p className="font-serif-heading text-2xl md:text-3xl text-gold dark:text-dark-gold font-bold">{s.val}</p>
-                <p className="text-xs text-charcoal/50 dark:text-ivory/50 font-sans-modern uppercase tracking-wider">{s.label}</p>
-              </div>
+              { count: published.length, suffix: '', label: 'Published' },
+              { count: upcoming.length, suffix: '', label: 'Coming Soon' },
+              { count: published.reduce((a, b) => a + ((b.pages ?? 0)), 0), suffix: '+', label: 'Pages Written' },
+            ].map((s, i) => (
+              <ScaleReveal key={s.label} delay={i * 0.1} className="text-center">
+                <p className="font-serif-heading text-3xl md:text-4xl text-gold dark:text-dark-gold font-bold">
+                  <AnimatedCounter value={s.count} suffix={s.suffix} />
+                </p>
+                <p className="text-xs text-charcoal/50 dark:text-ivory/50 font-sans-modern uppercase tracking-wider mt-1">{s.label}</p>
+              </ScaleReveal>
             ))}
           </div>
         </motion.div>

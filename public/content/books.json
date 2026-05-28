@@ -3,10 +3,9 @@
     "id": "book-1",
     "title": "SundaraKandam: Hanuman's Divine Mission",
     "subtitle": "Retold for the Modern Devotional Reader",
-    "description": "SundaraKandam is the most uplifting and hope-filled chapter of the Ramayana. It reveals the boundless power of devotion, courage, humility and unwavering faith in Shri Rama, as shown through Hanuman.\n\nThis book is a simple, heartfelt retelling of Sundarakandam, written especially for today's devotional reader. The timeless events are narrated in clear and easy yet simple English language, making them accessible to all age groups while preserving their sacred essence.\n\nThrough Hanuman's leap across the ocean, his discovery of Sita Devi, his fearless entry into Lanka and his unshakable surrender to Shri Rama, readers are gently guided to understand the boundless power of devotion.",
+    "description": "SundaraKandam is the most uplifting and hope-filled chapter of the Ramayana. It reveals the boundless power of devotion, courage, humility and unwavering faith in Shri Rama, as shown through Hanuman.\n\nThis book is a simple, heartfelt retelling of Sundarakandam, written especially for today's devotional reader. The timeless events are narrated in clear and easy yet simple English language, making them accessible to all age groups while preserving their sacred essence.",
     "genre": "Religious & Spiritual Fiction",
-    "coverImage": "/images/books/sundarakandam.svg",
-    "coverImageFallback": "https://images-na.ssl-images-amazon.com/images/P/B0GF2L5LX7.jpg",
+    "coverImage": "/images/books/sundarakandam-cover.jpg",
     "publishDate": "2026-01-05",
     "publishYear": 2026,
     "rating": 5.0,
@@ -34,16 +33,16 @@
       "kindleUnlimited": "Free with Kindle Unlimited"
     },
     "excerpt": "SundaraKandam is the most uplifting and hope-filled chapter of the Ramayana. It reveals the boundless power of devotion, courage, humility and unwavering faith in Shri Rama, as shown through Hanuman.",
-    "tags": ["mythology", "devotional", "ramayana", "hanuman", "spiritual", "retelling"]
+    "tags": ["mythology", "devotional", "ramayana", "hanuman", "spiritual", "retelling"],
+    "promoReel": null
   },
   {
     "id": "book-coming-1",
-    "title": "Upcoming: Children's Spiritual Series",
-    "subtitle": "Sacred Stories for Young Hearts",
-    "description": "A new series of spiritual, children-friendly books currently in progress — bringing sacred stories to young readers in a joyful and accessible way.",
-    "genre": "Children's Spiritual Fiction",
+    "title": "Upcoming Children's Devotional Book",
+    "subtitle": "A Spiritual Story for Young Hearts",
+    "description": "A new children's devotional book currently in progress — bringing sacred stories to young readers in a joyful, simple, and deeply meaningful way. Written especially for children who are beginning their spiritual journey.",
+    "genre": "Children's Devotional",
     "coverImage": "",
-    "coverImageFallback": "",
     "publishDate": "",
     "publishYear": 2026,
     "rating": 0,
@@ -58,7 +57,12 @@
     "bestSellersRank": {},
     "links": { "kindle": null, "paperback": null, "audiobook": null },
     "price": {},
-    "excerpt": "A heartfelt spiritual story written especially for children — making ancient wisdom joyful, simple, and memorable for young readers.",
-    "tags": ["children", "spiritual", "devotional", "upcoming"]
+    "excerpt": "A heartfelt devotional story written especially for children — making ancient wisdom joyful, simple, and memorable for young readers.",
+    "tags": ["children", "devotional", "spiritual", "upcoming", "kindle"],
+    "promoReel": {
+      "url": "https://www.instagram.com/reel/DY3iK78x19Y/",
+      "embedUrl": "https://www.instagram.com/reel/DY3iK78x19Y/embed/",
+      "caption": "A first look at the upcoming children's devotional book by Appu S R"
+    }
   }
 ]
