@@ -1,19 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Header }           from '@/app/components/Header';
-import { HeroSection }      from '@/app/components/HeroSection';
-import { AboutAuthor }      from '@/app/components/AboutAuthor';
-import { BooksShowcase }    from '@/app/components/BooksShowcase';
-import { PublishedBooks }   from '@/app/components/PublishedBooks';
-import { Testimonials }     from '@/app/components/Testimonials';
-import { Newsletter }       from '@/app/components/Newsletter';
-import { ContactForm }      from '@/app/components/ContactForm';
-import { Footer }           from '@/app/components/Footer';
-import { LoadingScreen }    from '@/app/components/LoadingScreen';
-import { ScrollToTop }      from '@/app/components/ScrollToTop';
+import { Header }              from '@/app/components/Header';
+import { HeroSection }         from '@/app/components/HeroSection';
+import { AboutAuthor }         from '@/app/components/AboutAuthor';
+import { BooksShowcase }       from '@/app/components/BooksShowcase';
+import { PublishedBooks }      from '@/app/components/PublishedBooks';
+import { Testimonials }        from '@/app/components/Testimonials';
+import { ContactForm }         from '@/app/components/ContactForm';
+import { Newsletter }          from '@/app/components/Newsletter';
+import { Footer }              from '@/app/components/Footer';
+import { PromoVideo }           from '@/app/components/PromoVideo';
+import { LoadingScreen }       from '@/app/components/LoadingScreen';
+import { ScrollToTop }         from '@/app/components/ScrollToTop';
 import { ReadingProgressBar, PageTransition } from '@/app/components/PageTransition';
-import { useTheme }         from '@/app/hooks/useTheme';
+import { useTheme }            from '@/app/hooks/useTheme';
 
 interface Author {
   name: string; tagline: string; bio: string; shortBio: string;
@@ -26,8 +27,9 @@ interface Author {
 
 interface Book {
   id: string; title: string; subtitle: string; description: string;
-  genre: string; coverImage: string; rating: number; reviews: number;
-  featured: boolean; status: 'published' | 'upcoming';
+  genre: string; coverImage: string; coverImageFallback?: string;
+  rating: number; reviews: number; featured: boolean;
+  status: 'published' | 'upcoming';
   publishDate: string; publishYear: number;
   links: { kindle?: string | null; paperback?: string | null; audiobook?: string | null };
   excerpt: string; tags: string[];
@@ -45,7 +47,7 @@ interface Testimonial {
 export default function Home() {
   const { mounted } = useTheme();
   const [author, setAuthor]           = useState<Author | null>(null);
-  const [books, setBooks]             = useState<Book[]>([]);
+  const [books,  setBooks]            = useState<Book[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading]         = useState(true);
 
@@ -56,7 +58,7 @@ export default function Home() {
       fetch('/content/testimonials.json').then(r => r.json()),
     ])
       .then(([a, b, t]) => { setAuthor(a); setBooks(b); setTestimonials(t); })
-      .catch(e => console.error('Content load error:', e))
+      .catch(e => console.error('Content error:', e))
       .finally(() => setLoading(false));
   }, []);
 
@@ -68,7 +70,6 @@ export default function Home() {
 
       {!isLoading && (
         <PageTransition>
-          {/* Reading progress + scroll-to-top — always mounted */}
           <ReadingProgressBar />
           <ScrollToTop />
 
@@ -90,12 +91,13 @@ export default function Home() {
               {books.length > 0 && <BooksShowcase books={books} />}
               {books.length > 0 && <PublishedBooks books={books} />}
 
+              <PromoVideo />
+
               <div id="reviews">
                 {testimonials.length > 0 && <Testimonials testimonials={testimonials} />}
               </div>
 
               <ContactForm />
-
               <Newsletter />
 
               <Footer

@@ -46,7 +46,7 @@ interface BooksProps {
 export const BooksShowcase = ({ books }: BooksProps) => {
   const { ref, isVisible } = useInView();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [hoveredBook, setHoveredBook] = useState<string | null>(null);
+  
 
   const categories = ['all', ...new Set(books.map(book => book.genre))];
   const filteredBooks = selectedCategory === 'all'
@@ -286,20 +286,16 @@ export const BooksShowcase = ({ books }: BooksProps) => {
               key={book.id}
               className="bg-white dark:bg-dark-surface rounded-xl overflow-hidden shadow-elevation-2 border border-beige dark:border-dark-gold/10"
               variants={fadeUpVariants}
-              onMouseEnter={() => setHoveredBook(book.id)}
-              onMouseLeave={() => setHoveredBook(null)}
               whileHover={{ y: -8 }}
             >
               <div className="relative h-64 overflow-hidden bg-amber-50 dark:bg-dark-gold/10">
-                <motion.img
-                  src={getCoverUrl(book)}
+                <ZoomableImage
+                  src={getCoverUrl(book) || ''}
                   alt={book.title}
-                  className="w-full h-full object-cover"
-                  animate={{ scale: hoveredBook === book.id ? 1.08 : 1 }}
-                  transition={{ duration: 0.4 }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x600/D4AF37/ffffff?text=Book';
-                  }}
+                  className="w-full h-full"
+                  bookLink={book.links.kindle || undefined}
+                  bookTitle={book.title}
+                  bookSubtitle={book.subtitle}
                 />
               </div>
               <div className="p-6">
