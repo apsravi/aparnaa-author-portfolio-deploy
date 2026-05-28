@@ -5,6 +5,7 @@
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
   NODE_VERSION = "20"
+  NEXT_PUBLIC_INSTAGRAM_FEED_ID = "KQhk4mY2tm6FgwA3fXmb"
 
 [[redirects]]
   from = "/*"
