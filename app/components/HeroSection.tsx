@@ -116,7 +116,7 @@ export const HeroSection = () => {
             variants={fadeUpVariants} initial="hidden" animate="visible" custom={4}
           >
             <MagneticWrap>
-              <motion.button onClick={() => scrollTo('books')}
+              <motion.button onClick={() => scrollTo('published-books')}
                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-charcoal dark:bg-gold text-cream dark:text-dark-bg font-serif-body font-semibold rounded-lg hover:opacity-90 transition-all shadow-elevation-2"
                 whileHover={{ scale: 1.04, y: -3, boxShadow: '0 12px 40px rgba(212,175,55,0.3)' }}
                 whileTap={{ scale: 0.97 }}>
@@ -146,7 +146,7 @@ export const HeroSection = () => {
             variants={fadeUpVariants} initial="hidden" animate="visible" custom={5}>
             {[
               { value: '5.0★', label: 'Amazon Rating', color: 'text-gold dark:text-dark-gold' },
-              { value: '₹199', label: 'Kindle Price', color: 'text-charcoal dark:text-cream' },
+              { value: '₹299', label: 'Kindle Price', color: 'text-charcoal dark:text-cream' },
               { value: 'Free', label: 'on Kindle Unlimited', color: 'text-green-600 dark:text-green-400' },
             ].map((stat, i) => (
               <motion.div key={stat.label} className="text-center"

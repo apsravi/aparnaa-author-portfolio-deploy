@@ -212,7 +212,7 @@ export const BooksShowcase = ({ books }: BooksProps) => {
                         whileTap={{ scale: 0.97 }}
                       >
                         <ShoppingCart className="w-4 h-4" />
-                        Buy on Kindle — ₹199
+                        Buy on Kindle — ₹299
                       </motion.a>
                     )}
                     {featuredBook.links.kindle && (

@@ -6,6 +6,7 @@ import { HeroSection }         from '@/app/components/HeroSection';
 import { AboutAuthor }         from '@/app/components/AboutAuthor';
 import { BooksShowcase }       from '@/app/components/BooksShowcase';
 import { PublishedBooks }      from '@/app/components/PublishedBooks';
+import { InstagramFeed }        from '@/app/components/InstagramFeed';
 import { Testimonials }        from '@/app/components/Testimonials';
 import { ContactForm }         from '@/app/components/ContactForm';
 import { Newsletter }          from '@/app/components/Newsletter';
@@ -97,7 +98,9 @@ export default function Home() {
                 {testimonials.length > 0 && <Testimonials testimonials={testimonials} />}
               </div>
 
-              <ContactForm />
+              <InstagramFeed />
+
+            <ContactForm />
               <Newsletter />
 
               <Footer
