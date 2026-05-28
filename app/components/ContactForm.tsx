@@ -1,17 +1,5 @@
 'use client';
 
-/*
-  NETLIFY FORMS — zero setup required.
-  On deploy, Netlify auto-detects the `data-netlify="true"` attribute
-  and captures every submission.
-
-  To get email notifications:
-  1. Go to Netlify Dashboard → Forms → "contact"
-  2. Click Settings → Email Notifications → Add email
-  3. Enter: aparnaaraviwrites@gmail.com
-  Done — every contact form submission emails you directly.
-*/
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeUpVariants, containerVariants } from '@/app/utils/animations';
@@ -19,6 +7,8 @@ import { useInView } from '@/app/hooks/useInView';
 import { Mail, User, Tag, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
+
+const RECIPIENT = 'aparnaaraviwrites@gmail.com';
 
 export const ContactForm = () => {
   const { ref, isVisible } = useInView();
@@ -40,8 +30,9 @@ export const ContactForm = () => {
     const err = validate();
     if (err) { setStatus('error'); setMsg(err); return; }
     setStatus('loading');
+
     try {
-      // Netlify Forms submission
+      // Primary: Netlify Forms (works when site is built from GitHub)
       const body = new URLSearchParams({
         'form-name': 'contact',
         name: form.name,
@@ -54,14 +45,33 @@ export const ContactForm = () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString(),
       });
-      if (!res.ok) throw new Error('Network error');
-      setStatus('success');
-      setMsg("Message sent! Appu S R will get back to you soon.");
-      setForm({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setStatus('idle'), 8000);
+
+      if (res.ok) {
+        setStatus('success');
+        setMsg("Message sent! Appu S R will get back to you soon.");
+        setForm({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setStatus('idle'), 8000);
+      } else {
+        // Fallback: open mailto with pre-filled content
+        const subject = encodeURIComponent(form.subject || `Message from ${form.name} via website`);
+        const body = encodeURIComponent(
+          `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
+        );
+        window.open(`mailto:${RECIPIENT}?subject=${subject}&body=${body}`, '_blank');
+        setStatus('success');
+        setMsg("Your email app has opened with the message pre-filled. Please click Send.");
+        setTimeout(() => setStatus('idle'), 8000);
+      }
     } catch {
-      setStatus('error');
-      setMsg('Something went wrong. Please email directly: aparnaaraviwrites@gmail.com');
+      // Fallback on network error
+      const subject = encodeURIComponent(form.subject || `Message from ${form.name} via website`);
+      const body = encodeURIComponent(
+        `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
+      );
+      window.open(`mailto:${RECIPIENT}?subject=${subject}&body=${body}`, '_blank');
+      setStatus('success');
+      setMsg("Your email app has opened with the message pre-filled. Please click Send.");
+      setTimeout(() => setStatus('idle'), 8000);
     }
   };
 
@@ -69,7 +79,6 @@ export const ContactForm = () => {
 
   return (
     <section id="contact" className="py-20 md:py-32 px-4 md:px-8 bg-white dark:bg-dark-surface/40">
-
       {/* Hidden Netlify form for bot detection */}
       <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
         <input type="text" name="name" />
@@ -80,8 +89,6 @@ export const ContactForm = () => {
 
       <div className="max-w-2xl mx-auto">
         <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={isVisible ? 'visible' : 'hidden'}>
-
-          {/* Header */}
           <motion.div variants={fadeUpVariants} className="text-center mb-12">
             <p className="text-gold dark:text-dark-gold font-sans-modern tracking-widest text-xs uppercase mb-3">Say Hello</p>
             <h2 className="font-serif-heading text-charcoal dark:text-cream mb-3" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)' }}>
@@ -89,13 +96,12 @@ export const ContactForm = () => {
             </h2>
             <p className="text-charcoal/60 dark:text-ivory/60 font-serif-body text-sm leading-relaxed">
               For reader queries, collaborations, or book club requests —{' '}
-              <a href="mailto:aparnaaraviwrites@gmail.com" className="text-gold dark:text-dark-gold hover:underline">
-                aparnaaraviwrites@gmail.com
+              <a href={`mailto:${RECIPIENT}`} className="text-gold dark:text-dark-gold hover:underline">
+                {RECIPIENT}
               </a>
             </p>
           </motion.div>
 
-          {/* Form / Success toggle */}
           <AnimatePresence mode="wait">
             {status === 'success' ? (
               <motion.div key="success"
@@ -108,11 +114,10 @@ export const ContactForm = () => {
                   <CheckCircle2 className="w-16 h-16 text-green-500" />
                 </motion.div>
                 <h3 className="font-serif-heading text-2xl text-charcoal dark:text-cream">Message Sent!</h3>
-                <p className="text-charcoal/60 dark:text-ivory/60 font-serif-body">{msg}</p>
+                <p className="text-charcoal/60 dark:text-ivory/60 font-serif-body max-w-sm">{msg}</p>
               </motion.div>
             ) : (
-              <motion.form
-                key="form"
+              <motion.form key="form"
                 name="contact"
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
@@ -120,79 +125,55 @@ export const ContactForm = () => {
                 className="space-y-4"
                 variants={containerVariants}
                 initial="hidden"
-                animate={isVisible ? 'visible' : 'hidden'}
-              >
-                {/* Honeypot */}
+                animate={isVisible ? 'visible' : 'hidden'}>
                 <input name="bot-field" type="hidden" />
 
-                {/* Name */}
                 <motion.div variants={fadeUpVariants} className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/30 dark:text-ivory/30" />
-                  <input
-                    type="text" name="name" value={form.name} required
+                  <input type="text" name="name" value={form.name} required
                     onChange={e => set('name', e.target.value)}
-                    placeholder="Your name"
-                    disabled={status === 'loading'}
-                    className={inputBase}
-                  />
+                    placeholder="Your name" disabled={status === 'loading'}
+                    className={inputBase} />
                 </motion.div>
 
-                {/* Email */}
                 <motion.div variants={fadeUpVariants} className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/30 dark:text-ivory/30" />
-                  <input
-                    type="email" name="email" value={form.email} required
+                  <input type="email" name="email" value={form.email} required
                     onChange={e => set('email', e.target.value)}
-                    placeholder="your@email.com"
-                    disabled={status === 'loading'}
-                    className={inputBase}
-                  />
+                    placeholder="your@email.com" disabled={status === 'loading'}
+                    className={inputBase} />
                 </motion.div>
 
-                {/* Subject */}
                 <motion.div variants={fadeUpVariants} className="relative">
                   <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/30 dark:text-ivory/30" />
-                  <input
-                    type="text" name="subject" value={form.subject}
+                  <input type="text" name="subject" value={form.subject}
                     onChange={e => set('subject', e.target.value)}
                     placeholder="What is this about? (optional)"
-                    disabled={status === 'loading'}
-                    className={inputBase}
-                  />
+                    disabled={status === 'loading'} className={inputBase} />
                 </motion.div>
 
-                {/* Message */}
                 <motion.div variants={fadeUpVariants} className="relative">
                   <MessageSquare className="absolute left-3 top-4 w-4 h-4 text-charcoal/30 dark:text-ivory/30" />
-                  <textarea
-                    name="message" value={form.message} required rows={5}
+                  <textarea name="message" value={form.message} required rows={5}
                     onChange={e => set('message', e.target.value)}
-                    placeholder="Your message…"
-                    disabled={status === 'loading'}
-                    className={`${inputBase} resize-none pt-4`}
-                  />
+                    placeholder="Your message…" disabled={status === 'loading'}
+                    className={`${inputBase} resize-none pt-4`} />
                 </motion.div>
 
-                {/* Error */}
                 <AnimatePresence>
                   {status === 'error' && (
-                    <motion.div
-                      className="flex items-center gap-2 text-red-500 dark:text-red-400 text-sm font-serif-body"
+                    <motion.div className="flex items-center gap-2 text-red-500 dark:text-red-400 text-sm font-serif-body"
                       initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
                       <AlertCircle className="w-4 h-4 shrink-0" />{msg}
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                {/* Submit */}
-                <motion.button
-                  type="submit"
-                  disabled={status === 'loading'}
+                <motion.button type="submit" disabled={status === 'loading'}
                   variants={fadeUpVariants}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-charcoal dark:bg-gold text-cream dark:text-dark-bg font-serif-body font-semibold rounded-xl hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-elevation-2"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-charcoal dark:bg-gold text-cream dark:text-dark-bg font-serif-body font-semibold rounded-xl hover:opacity-90 transition-all disabled:opacity-50 shadow-elevation-2"
                   whileHover={status !== 'loading' ? { scale: 1.02, y: -1 } : {}}
-                  whileTap={status !== 'loading' ? { scale: 0.98 } : {}}
-                >
+                  whileTap={status !== 'loading' ? { scale: 0.98 } : {}}>
                   {status === 'loading'
                     ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>
                     : <><Send className="w-4 h-4" /> Send Message</>}

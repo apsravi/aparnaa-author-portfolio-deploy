@@ -1,12 +1,5 @@
 'use client';
 
-/*
-  NETLIFY FORMS — zero setup.
-  Submissions appear at: Netlify Dashboard → Forms → "newsletter"
-  Enable email alerts: Forms → newsletter → Settings → Email Notifications
-  → aparnaaraviwrites@gmail.com
-*/
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeUpVariants, containerVariants } from '@/app/utils/animations';
@@ -15,10 +8,12 @@ import { Mail, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
+const RECIPIENT = 'aparnaaraviwrites@gmail.com';
+
 export const Newsletter = () => {
   const { ref, isVisible } = useInView();
-  const [email, setEmail] = useState('');
-  const [name, setName]   = useState('');
+  const [email, setEmail]   = useState('');
+  const [name, setName]     = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg]       = useState('');
 
@@ -28,7 +23,9 @@ export const Newsletter = () => {
       setStatus('error'); setMsg('Please enter a valid email address.'); return;
     }
     setStatus('loading');
+
     try {
+      // Primary: Netlify Forms
       const body = new URLSearchParams({
         'form-name': 'newsletter',
         name: name.trim() || 'Reader',
@@ -39,20 +36,37 @@ export const Newsletter = () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString(),
       });
-      if (!res.ok) throw new Error();
-      setStatus('success');
-      setMsg("You're subscribed! Welcome to the community.");
+
+      if (res.ok) {
+        setStatus('success');
+        setMsg("You're subscribed! Welcome to the community.");
+      } else {
+        // Fallback: mailto to notify author of new subscriber
+        const subject = encodeURIComponent('New Newsletter Subscriber');
+        const mailBody = encodeURIComponent(
+          `New subscriber!\n\nName: ${name || 'Not provided'}\nEmail: ${email}\n\nPlease add to your mailing list.`
+        );
+        window.open(`mailto:${RECIPIENT}?subject=${subject}&body=${mailBody}`, '_blank');
+        setStatus('success');
+        setMsg("Subscribed! Your email app will open to confirm. Thank you for joining.");
+      }
       setEmail(''); setName('');
       setTimeout(() => setStatus('idle'), 8000);
     } catch {
-      setStatus('error');
-      setMsg('Something went wrong. Please try again.');
+      const subject = encodeURIComponent('New Newsletter Subscriber');
+      const mailBody = encodeURIComponent(
+        `New subscriber!\n\nName: ${name || 'Not provided'}\nEmail: ${email}`
+      );
+      window.open(`mailto:${RECIPIENT}?subject=${subject}&body=${mailBody}`, '_blank');
+      setStatus('success');
+      setMsg("Subscribed! Thank you for joining the community.");
+      setEmail(''); setName('');
+      setTimeout(() => setStatus('idle'), 8000);
     }
   };
 
   return (
     <>
-      {/* Hidden form for Netlify bot detection */}
       <form name="newsletter" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
@@ -64,7 +78,8 @@ export const Newsletter = () => {
         <div className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full border border-gold/8 pointer-events-none" />
 
         <div className="relative z-10 max-w-2xl mx-auto">
-          <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={isVisible ? 'visible' : 'hidden'} className="text-center">
+          <motion.div ref={ref} variants={containerVariants} initial="hidden"
+            animate={isVisible ? 'visible' : 'hidden'} className="text-center">
 
             <motion.div variants={fadeUpVariants} className="flex justify-center mb-6">
               <div className="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center">
@@ -72,31 +87,45 @@ export const Newsletter = () => {
               </div>
             </motion.div>
 
-            <motion.p variants={fadeUpVariants} className="text-gold/80 font-sans-modern tracking-widest text-xs uppercase mb-3">Stay Connected</motion.p>
+            <motion.p variants={fadeUpVariants}
+              className="text-gold/80 font-sans-modern tracking-widest text-xs uppercase mb-3">
+              Stay Connected
+            </motion.p>
 
-            <motion.h2 variants={fadeUpVariants} className="font-serif-heading text-cream mb-4" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)' }}>
+            <motion.h2 variants={fadeUpVariants}
+              className="font-serif-heading text-cream mb-4"
+              style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)' }}>
               Join the Community
             </motion.h2>
 
-            <motion.p variants={fadeUpVariants} className="text-cream/60 font-serif-body mb-10 leading-relaxed" style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)' }}>
-              Subscribe for early access to new book launches, devotional reflections, and behind-the-scenes glimpses into the writing journey.
+            <motion.p variants={fadeUpVariants}
+              className="text-cream/60 font-serif-body mb-10 leading-relaxed"
+              style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)' }}>
+              Subscribe for early access to new book launches, devotional reflections,
+              and behind-the-scenes glimpses into the writing journey.
             </motion.p>
 
             <AnimatePresence mode="wait">
               {status === 'success' ? (
-                <motion.div key="success" className="flex flex-col items-center gap-4 py-10"
-                  initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                <motion.div key="success"
+                  className="flex flex-col items-center gap-4 py-10"
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
                   transition={{ type: 'spring', stiffness: 260, damping: 22 }}>
                   <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.5 }}>
                     <CheckCircle2 className="w-14 h-14 text-green-400" />
                   </motion.div>
                   <p className="text-cream font-serif-heading text-xl">You're in!</p>
-                  <p className="text-cream/60 font-serif-body text-sm">{msg}</p>
+                  <p className="text-cream/60 font-serif-body text-sm max-w-xs">{msg}</p>
                 </motion.div>
               ) : (
                 <motion.form key="form"
-                  name="newsletter" data-netlify="true" data-netlify-honeypot="bot-field"
-                  onSubmit={handleSubmit} className="space-y-3"
+                  name="newsletter"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={handleSubmit}
+                  className="space-y-3"
                   initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
                   <input name="bot-field" type="hidden" />
 
@@ -115,7 +144,8 @@ export const Newsletter = () => {
 
                   <AnimatePresence>
                     {status === 'error' && (
-                      <motion.div className="flex items-center gap-2 text-red-400 text-sm font-serif-body"
+                      <motion.div
+                        className="flex items-center gap-2 text-red-400 text-sm font-serif-body"
                         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
                         <AlertCircle className="w-4 h-4 shrink-0" />{msg}
                       </motion.div>
@@ -131,7 +161,9 @@ export const Newsletter = () => {
                       : <><Sparkles className="w-4 h-4" /> Subscribe</>}
                   </motion.button>
 
-                  <p className="text-cream/30 font-sans-modern text-xs tracking-wide">No spam, ever. Unsubscribe anytime.</p>
+                  <p className="text-cream/30 font-sans-modern text-xs tracking-wide">
+                    No spam, ever. Unsubscribe anytime.
+                  </p>
                 </motion.form>
               )}
             </AnimatePresence>
