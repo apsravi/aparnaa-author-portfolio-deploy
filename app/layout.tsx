@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './styles/globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://appusr.netlify.app'),
+  metadataBase: new URL('https://appusr-author-portfolio.netlify.app'),
   title: 'Appu S R | Devotional Fiction Author — SundaraKandam',
   description:
     "Appu S R is a Chennai-based devotional fiction author. Her debut Kindle book SundaraKandam: Hanuman's Divine Mission retells the Ramayana's most uplifting chapter for modern readers of all ages.",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Appu S R' }],
   openGraph: {
     type: 'website',
-    url: 'https://appusr.netlify.app',
+    url: 'https://appusr-author-portfolio.netlify.app',
     title: 'Appu S R | Devotional Fiction Author',
     description:
       "Bringing the Ramayana to modern readers — SundaraKandam: Hanuman's Divine Mission on Kindle.",

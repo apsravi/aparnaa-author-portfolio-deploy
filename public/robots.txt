@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://appusr.netlify.app/sitemap.xml
+Sitemap: https://appusr-author-portfolio.netlify.app/sitemap.xml
